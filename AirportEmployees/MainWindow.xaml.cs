@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AirportEmployees.ViewModels;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,9 +21,22 @@ namespace AirportEmployees
     /// </summary>
     public partial class MainWindow : Window
     {
+        App app = (App)Application.Current;
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new AirportEmployees.ViewModels.EmployeeViewModel(app.Connection);
+        }
+
+        private void BackPage(object sender, RoutedEventArgs e)
+        {
+            ((EmployeeViewModel)DataContext).PreviousPage();
+        }
+
+        private void NextPage(object sender, RoutedEventArgs e)
+        {
+            ((EmployeeViewModel)DataContext).NextPage();
         }
     }
 }
